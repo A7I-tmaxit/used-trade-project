@@ -1,0 +1,50 @@
+
+/* Apply "Jua" font to all text for a rounded look */
+* {
+  font-family: 'Jua', sans-serif;
+}
+
+/* Set the entire background to orange */
+body, html {
+  background-color: #FF6F00; /* Bright orange background */
+  color: #343a40;
+  height: 100%;
+  margin: 0;
+}
+
+header {
+  background-color: #FF6F00; /* Match orange background */
+  padding: 20px 0;
+}
+
+/* White Rounded Box for Title */
+.title-box {
+  background-color: white;
+  border-radius: 15px;
+  padding: 10px 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.title-box h1 {
+  margin: 0;
+  color: #FF6F00;
+  font-size: 2rem;
+  font-family: 'Jua', sans-serif; /* Rounded font */
+}
+
+.emoji {
+  font-size: 2rem; /* Larger size for carrot emoji */
+}
+
+/* Orange border for Sell and My Page buttons */
+.btn-outline-warning {
+  border-color: #FF6F00;
+  color: #FF6F00;
+}
+
+.btn-outline-warning:hover {
+  background-color: #FF6F00;
+  color: white;
+}

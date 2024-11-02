@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT희망 중고거래</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header with Carrot Emojis on Both Sides -->
+    <header class="text-center py-4" id="header">
+        <div class="title-box d-flex justify-content-center align-items-center">
+            <span class="emoji me-2">🥕</span>
+            <h1 style="white-space: nowrap;">IT 희망 중고거래</h1>
+            <span class="emoji ms-2">🥕</span>
+        </div>
+    </header>
+
+    <!-- Login Section (Visible Initially) -->
+    <main class="container my-5 d-flex flex-column align-items-center">
+        <section id="login" class="text-center" style="max-width: 400px;">
+            <h2 class="mb-3">Login</h2>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="loginUsername" placeholder="Username">
+            </div>
+            <div class="mb-3">
+                <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+            </div>
+            <button class="btn btn-primary w-100" onclick="login()">Login</button>
+            <div id="loginMessage" class="mt-3 text-danger"></div>
+            <p class="mt-4">아직 회원이 아니라면 <span class="text-decoration-underline text-primary" onclick="showSection('register')">회원가입하세요</span></p>
+        </section>
+
+        <!-- Register Section (Initially Hidden) -->
+        <section id="register" class="d-none text-center" style="max-width: 400px;">
+            <h2 class="mb-3">Register</h2>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="registerUsername" placeholder="Username">
+            </div>
+            <div class="mb-3">
+                <input type="password" class="form-control" id="registerPassword" placeholder="Password">
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="registerName" placeholder="Full Name">
+            </div>
+            <div class="mb-3">
+                <input type="number" class="form-control" id="registerBalance" placeholder="Account Balance">
+            </div>
+            <button class="btn btn-success w-100" onclick="register()">Register</button>
+            <div id="registerMessage" class="mt-3 text-danger"></div>
+            <p class="mt-4">이미 계정이 있다면 <span class="text-decoration-underline text-primary" onclick="showSection('login')">로그인 하기</span></p>
+        </section>
+    </main>
+
+    <!-- Main Content Section -->
+    <div id="mainPage" class="d-none">
+        <div class="container mt-3 d-flex justify-content-center" id="buttonRow">
+            <input type="text" class="form-control w-50 me-2" id="searchBar" placeholder="상품명, 지역명, @상점명 입력">
+            <button class="btn btn-outline-warning me-2" onclick="searchItems()">검색</button>
+            <button class="btn btn-outline-warning me-2" onclick="showSellPage()">판매하기</button>
+            <button class="btn btn-outline-warning" onclick="showMyPage()">마이페이지</button>
+        </div>
+        <main class="container my-5">
+            <section id="productList" class="d-flex flex-wrap"></section>
+        </main>
+    </div>
+
+    <!-- Sell Page -->
+    <div id="sellPage" class="d-none">
+        <div class="container">
+            <button class="btn btn-secondary mb-3" onclick="showMainPage()">← 홈으로</button>
+            <h2 class="text-center mt-5">상품 판매하기</h2>
+            <div class="mb-3">
+                <label for="productImage" class="form-label">사진 등록</label>
+                <input type="file" class="form-control" id="productImage" multiple>
+            </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="productName" placeholder="상품 이름">
+            </div>
+            <div class="mb-3">
+                <textarea class="form-control" id="productDescription" placeholder="상품 설명"></textarea>
+            </div>
+            <div class="mb-3">
+                <input type="number" class="form-control" id="productPrice" placeholder="상품 가격">
+            </div>
+            <button class="btn btn-success w-100" onclick="sellProduct()">판매하기</button>
+        </div>
+    </div>
+
+    <!-- My Page -->
+    <div id="myPage" class="d-none">
+        <div class="container">
+            <button class="btn btn-secondary mb-3" onclick="showMainPage()">← 홈으로</button>
+            <h2 class="text">My Profile</h2>
+            <p><strong>이름:</strong> <span id="profileName"></span></p>
+            <p><strong>포인트:</strong> <span id="accountBalance">0</span> </p>
+            <button class="btn btn-outline-primary w-100 mb-2" onclick="showMySalesPage()">내 판매상품</button>
+            <button class="btn btn-outline-primary w-100" onclick="showWishlistPage()">찜리스트</button>
+        </div>
+    </div>
+
+    <!-- My Sales Page -->
+    <div id="mySalesPage" class="d-none">
+        <div class="container">
+            <button class="btn btn-secondary mb-3" onclick="showMyPage()">← 마이페이지로</button>
+            <h2 class="text-center">내 판매상품</h2>
+            <section id="mySalesList" class="d-flex flex-wrap"></section>
+        </div>
+    </div>
+
+    <!-- Wishlist Page -->
+    <div id="wishlistPage" class="d-none">
+        <div class="container">
+            <button class="btn btn-secondary mb-3" onclick="showMyPage()">← 마이페이지로</button>
+            <h2 class="text-center">찜리스트</h2>
+            <section id="wishlistList" class="d-flex flex-wrap"></section>
+        </div>
+    </div>
+
+    <!-- Product Detail Page -->
+    <div id="productDetailPage" class="d-none">
+        <div class="container">
+            <button class="btn btn-secondary mb-3" onclick="showMainPage()">← 홈으로</button>
+            <div id="productDetail" class="text-center"></div>
+            <button class="btn btn-primary mt-3" onclick="purchaseProduct()">구매하기</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
