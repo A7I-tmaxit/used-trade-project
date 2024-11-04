@@ -2,8 +2,9 @@ import json
 from fastapi import FastAPI, HTTPException
 from fastapi.responses import FileResponse
 from fastapi.staticfiles import StaticFiles
-from pydantic import BaseModel
+from pydantic import BaseModel, Field, field_validator
 from typing import Dict, Any
+from passlib.context import CryptContext
 
 app = FastAPI()
 
@@ -12,12 +13,19 @@ PRODUCT_DATA_FILE = "product_data.json"
 
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+# Password hashing context
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
 
 class User(BaseModel):
     username: str
     password: str
     name: str
-    balance: int
+    balance: int = Field(default=0)
+
+    @field_validator('password')
+    def hash_password(cls, v):
+        return pwd_context.hash(v)
 
 
 class UserLogin(BaseModel):
@@ -29,6 +37,12 @@ class Product(BaseModel):
     product_id: str
     name: str
     price: float
+
+    @field_validator('price')
+    def check_price(cls, v):
+        if v <= 0:
+            raise ValueError("Price must be a positive number")
+        return v
 
 
 def load_data(file_path: str) -> Dict[str, Any]:
@@ -81,13 +95,13 @@ async def login(user: UserLogin):
     """Log in an existing user."""
     users = load_data(USER_DATA_FILE)
 
-    if (
-        not user_exists(users, user.username)
-        or users[user.username]["password"] != user.password
-    ):
+    if not user_exists(users, user.username):
         raise HTTPException(status_code=401, detail="Invalid username or password")
 
     user_data = users[user.username]
+    if not pwd_context.verify(user.password, user_data["password"]):
+        raise HTTPException(status_code=401, detail="Invalid username or password")
+
     return {
         "message": "Login successful",
         "userId": user.username,
@@ -114,6 +128,32 @@ async def get_products():
     """Retrieve a list of all products."""
     products = load_data(PRODUCT_DATA_FILE)
     return products
+
+
+@app.put("/update_product/{product_id}")
+async def update_product(product_id: str, product: Product):
+    """Update an existing product."""
+    products = load_data(PRODUCT_DATA_FILE)
+
+    if product_id not in products:
+        raise HTTPException(status_code=404, detail="Product not found")
+
+    products[product_id] = product.dict()
+    save_data(PRODUCT_DATA_FILE, products)
+    return {"message": "Product updated successfully"}
+
+
+@app.delete("/delete_product/{product_id}")
+async def delete_product(product_id: str):
+    """Delete a product."""
+    products = load_data(PRODUCT_DATA_FILE)
+
+    if product_id not in products:
+        raise HTTPException(status_code=404, detail="Product not found")
+
+    del products[product_id]
+    save_data(PRODUCT_DATA_FILE, products)
+    return {"message": "Product deleted successfully"}
 
 
 if __name__ == "__main__":

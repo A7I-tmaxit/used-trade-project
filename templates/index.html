@@ -20,39 +20,46 @@
 
     <!-- Login Section (Visible Initially) -->
     <main class="container my-5 d-flex flex-column align-items-center">
+        <!-- Login Section -->
         <section id="login" class="text-center" style="max-width: 400px;">
             <h2 class="mb-3">Login</h2>
             <div class="mb-3">
-                <input type="text" class="form-control" id="loginUsername" placeholder="Username">
+                <label for="loginUsername" class="form-label">Username</label>
+                <input type="text" class="form-control" id="loginUsername" placeholder="Username" required>
             </div>
             <div class="mb-3">
-                <input type="password" class="form-control" id="loginPassword" placeholder="Password">
+                <label for="loginPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="loginPassword" placeholder="Password" required>
             </div>
             <button class="btn btn-primary w-100" onclick="login()">Login</button>
             <div id="loginMessage" class="mt-3 text-danger"></div>
             <p class="mt-4">아직 회원이 아니라면 <span class="text-decoration-underline text-primary" onclick="showSection('register')">회원가입하세요</span></p>
         </section>
 
-        <!-- Register Section (Initially Hidden) -->
+        <!-- Register Section -->
         <section id="register" class="d-none text-center" style="max-width: 400px;">
             <h2 class="mb-3">Register</h2>
             <div class="mb-3">
-                <input type="text" class="form-control" id="registerUsername" placeholder="Username">
+                <label for="registerUsername" class="form-label">Username</label>
+                <input type="text" class="form-control" id="registerUsername" placeholder="Username" required>
             </div>
             <div class="mb-3">
-                <input type="password" class="form-control" id="registerPassword" placeholder="Password">
+                <label for="registerPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="registerPassword" placeholder="Password" required>
             </div>
             <div class="mb-3">
-                <input type="text" class="form-control" id="registerName" placeholder="Full Name">
+                <label for="registerName" class="form-label">Full Name</label>
+                <input type="text" class="form-control" id="registerName" placeholder="Full Name" required>
             </div>
             <div class="mb-3">
-                <input type="number" class="form-control" id="registerBalance" placeholder="Account Balance">
+                <label for="registerBalance" class="form-label">Account Balance</label>
+                <input type="number" class="form-control" id="registerBalance" placeholder="Account Balance" min="0" required>
             </div>
             <button class="btn btn-success w-100" onclick="register()">Register</button>
             <div id="registerMessage" class="mt-3 text-danger"></div>
             <p class="mt-4">이미 계정이 있다면 <span class="text-decoration-underline text-primary" onclick="showSection('login')">로그인 하기</span></p>
         </section>
-    </main>
+    </main> 
 
     <!-- Main Content Section -->
     <div id="mainPage" class="d-none">
