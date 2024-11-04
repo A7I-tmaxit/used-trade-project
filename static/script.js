@@ -51,7 +51,7 @@ function register() {
     const name = document.getElementById("registerName").value;
     const balance = parseInt(document.getElementById("registerBalance").value);
 
-    fetch("/signup", {
+    fetch("/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password, name, balance })
@@ -95,7 +95,7 @@ function showMyPage() {
 
 // Load and show My Sales Page
 function loadMySales() {
-    fetch(`http://localhost:8080/user_sales?userId=${userId}`)
+    fetch(`/user_sales?userId=${userId}`)
         .then(response => response.json())
         .then(items => {
             const mySalesList = document.getElementById("mySalesList");
@@ -179,6 +179,8 @@ function sellProduct() {
     }
 }
 
+
+
 // Show Sell Page
 function showSellPage() {
     showSection("sellPage");
@@ -232,9 +234,8 @@ function displayProductList(products) {
         });
     }
 }
-
 function showMySalesPage() {
-    fetch(`http://localhost:8080/user_sales?userId=${userId}`)
+    fetch(`/user_sales?userId=${userId}`)
         .then(response => response.json())
         .then(items => {
             const mySalesList = document.getElementById("mySalesList");
@@ -264,6 +265,8 @@ function showMySalesPage() {
         })
         .catch(error => console.error("Error loading sales items:", error));
 }
+
+
 
 // Back Button for each page
 document.querySelectorAll(".btn-secondary").forEach(button => {

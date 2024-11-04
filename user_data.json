@@ -1,0 +1,8 @@
+{
+    "test": {
+        "username": "test",
+        "password": "test",
+        "name": "test",
+        "balance": 1200
+    }
+}
