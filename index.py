@@ -23,7 +23,7 @@ class User(BaseModel):
     name: str
     balance: int = Field(default=0)
 
-    @field_validator('password')
+    @field_validator("password")
     def hash_password(cls, v):
         return pwd_context.hash(v)
 
@@ -38,7 +38,7 @@ class Product(BaseModel):
     name: str
     price: float
 
-    @field_validator('price')
+    @field_validator("price")
     def check_price(cls, v):
         if v <= 0:
             raise ValueError("Price must be a positive number")
