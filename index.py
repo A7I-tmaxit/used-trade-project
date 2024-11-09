@@ -138,7 +138,9 @@ async def update_product(product_id: str, product: Product):
     if product_id not in products:
         raise HTTPException(status_code=404, detail="Product not found")
 
-    products[product_id] = product.dict()
+    products[product_id] = product.model_dump()
+    for key, value in product.model_dump().items():
+        products[product_id][key] = value
     save_data(PRODUCT_DATA_FILE, products)
     return {"message": "Product updated successfully"}
 
