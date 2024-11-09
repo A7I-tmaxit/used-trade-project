@@ -2,6 +2,22 @@
     "q": {
         "password": "q",
         "name": "q",
-        "balance": "10000"
+        "balance": 13100,
+        "favorites": [
+            "aa_20241108231341"
+        ]
+    },
+    "a": {
+        "password": "a",
+        "name": "a",
+        "balance": 4000
+    },
+    "aa": {
+        "password": "aa",
+        "name": "aa",
+        "balance": 7000,
+        "favorites": [
+            "q_20241108154001"
+        ]
     }
 }
